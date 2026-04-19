@@ -79,7 +79,6 @@ export default defineConfig(({ command }) => {
     build: {
       sourcemap: true,
       rollupOptions: {
-        // Шукаємо HTML-файли в src/public
         input: glob
           .sync('./public/*.html', { cwd: 'src' })
           .map(file =>
@@ -96,7 +95,7 @@ export default defineConfig(({ command }) => {
           chunkFileNames: 'assets/[name]-[hash].js',
         },
       },
-      outDir: '../dist', // Виходимо назад у корінь проєкту для папки dist
+      outDir: '../dist',
       emptyOutDir: true,
     },
     plugins: [
