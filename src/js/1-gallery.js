@@ -90,7 +90,6 @@ if (!gallery) {
 
   gallery.insertAdjacentHTML('beforeend', galleryMarkup);
 
-  // даємо браузеру DOM оновитися
   const lightbox = new SimpleLightbox('.gallery a', {
     captions: true,
     captionsData: 'alt',
