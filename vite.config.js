@@ -10,6 +10,7 @@ function publicHtmlPlugin() {
 
   return {
     name: 'public-html',
+    // Dev server: serve HTML files from src/public
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
         if (req.method !== 'GET') {
@@ -41,6 +42,30 @@ function publicHtmlPlugin() {
         }
       });
     },
+    // Build: move HTML files from dist/public/ to dist/
+    generateBundle(_, bundle) {
+      for (const [fileName, chunk] of Object.entries(bundle)) {
+        if (fileName.startsWith('public/') && fileName.endsWith('.html')) {
+          const newFileName = fileName.replace('public/', '');
+          chunk.fileName = newFileName;
+          bundle[newFileName] = chunk;
+          delete bundle[fileName];
+        }
+      }
+    },
+    async closeBundle() {
+      const distPublic = path.resolve(__dirname, 'dist', 'public');
+      const dist = path.resolve(__dirname, 'dist');
+      try {
+        const files = await fs.readdir(distPublic);
+        for (const file of files) {
+          if (file.endsWith('.html')) {
+            await fs.rename(path.join(distPublic, file), path.join(dist, file));
+          }
+        }
+        await fs.rmdir(distPublic);
+      } catch {}
+    },
   };
 }
 
@@ -57,7 +82,9 @@ export default defineConfig(({ command }) => {
         // Шукаємо HTML-файли в src/public
         input: glob
           .sync('./public/*.html', { cwd: 'src' })
-          .map(file => file.replace(/\\/g, '/')),
+          .map(file =>
+            path.resolve(__dirname, 'src', file.replace(/\\/g, '/'))
+          ),
         output: {
           manualChunks(id) {
             if (id.includes('node_modules')) {
@@ -66,6 +93,7 @@ export default defineConfig(({ command }) => {
           },
           entryFileNames: '[name].js',
           assetFileNames: 'assets/[name]-[hash][extname]',
+          chunkFileNames: 'assets/[name]-[hash].js',
         },
       },
       outDir: '../dist', // Виходимо назад у корінь проєкту для папки dist
