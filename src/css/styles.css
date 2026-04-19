@@ -80,21 +80,19 @@
   box-shadow: 0 2px 6px rgba(78, 117, 255, 0.3);
 }
 
-/* Стилізація контейнера форми */
 .feedback-form {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 408px; /* Ширина форми */
-  margin: 40px auto; /* Центрування на сторінці */
+  max-width: 408px;
+  margin: 40px auto;
   padding: 24px;
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  box-sizing: border-box; /* Щоб падінги форми не розширювали її */
+  box-sizing: border-box;
 }
 
-/* Стилізація написів (Label) */
 .feedback-form label {
   display: flex;
   flex-direction: column;
@@ -106,13 +104,11 @@
   color: #2e2f42;
 }
 
-/* Спільні стилі для input та textarea */
 .feedback-form input,
 .feedback-form textarea {
   width: 100%;
-  padding: 8px 16px; /* 16px — відступ зліва всередині поля */
+  padding: 8px 16px;
 
-  /* КРИТИЧНО ВАЖЛИВО: щоб поля не вилазили за межі форми */
   box-sizing: border-box;
 
   border: 1px solid #8e8f99;
@@ -123,19 +119,16 @@
   transition: border-color 0.3s ease;
 }
 
-/* Ефект при фокусі на полі */
 .feedback-form input:focus,
 .feedback-form textarea:focus {
   border-color: #4e75ff;
 }
 
-/* Специфічні налаштування для textarea */
 .feedback-form textarea {
-  resize: none; /* Заборона ручної зміни розміру */
-  margin-bottom: 8px; /* Додатковий відступ перед кнопкою */
+  resize: none;
+  margin-bottom: 8px;
 }
 
-/* Стилізація кнопки */
 .feedback-form button {
   display: block;
   width: 100%;
@@ -157,7 +150,6 @@
   transition: background-color 0.3s ease;
 }
 
-/* Ефект при наведенні на кнопку */
 .feedback-form button:hover {
   background-color: #6c8cff;
 }
